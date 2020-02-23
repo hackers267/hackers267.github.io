@@ -1,0 +1,586 @@
+
+<!DOCTYPE html>
+<html lang="zh-Cn" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Redis 列表(List)命令 - 小黑开发</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="JS TS NodeJs 数据库 前端 JavaScript TypeScript Vue React Git,"> 
+    <meta name="description" content="Redis 列表(List)命令前言因为List列表类型和String类型有所不同，所以讲解顺序和方法也会有所改变。在我们对列表命令进行预览的时候，我们发现，列表命令的首字母分别是：L、R和B。这三,"> 
+    <meta name="author" content="silence_zhpf"> 
+    <link rel="alternative" href="atom.xml" title="小黑开发" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">小黑开发</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="http://hackers267.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">Redis 列表(List)命令</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/Redis"><b>「
+                    </b>REDIS<b> 」</b></a>
+                
+                二月 23, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2020/02/23/Redis-%E5%88%97%E8%A1%A8-List-%E5%91%BD%E4%BB%A4/" title="Redis 列表(List)命令" class="">Redis 列表(List)命令</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    7.1k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    6 mins.
+                </span>
+                
+                
+                <span id="/2020/02/23/Redis-列表-List-命令/" class="leancloud_visitors" data-flag-title="Redis 列表(List)命令">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <i class="leancloud-visitors-count">1000000</i>
+                </span>
+                
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/List/" rel="tag">List</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/%E5%88%97%E8%A1%A8/" rel="tag">列表</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="Redis-列表-List-命令"><a href="#Redis-列表-List-命令" class="headerlink" title="Redis 列表(List)命令"></a>Redis 列表(List)命令</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为<code>List</code>列表类型和<code>String</code>类型有所不同，所以讲解顺序和方法也会有所改变。在我们对列表命令进行预览的时候，我们发现，列表命令的首字母分别是：<strong>L</strong>、<strong>R</strong>和<strong>B</strong>。这三者分别代表了什么呢？简单来说，这三个命令分别是<em>list<em>、</em>right<em>和</em>block<em>的缩写。意味着，这些命令的操作顺序是</em>从左开始</em>,<em>从右开始</em>以及命令具有<em>阻塞</em>的。因为这个特性，我们对命令进行梳理的时候，会对这些特殊的“前缀”做大写处理。</p>
+<p>考虑到对命令进行分门别类有利于记忆，以及由浅入深有利于理解。我们对列表命令进行的分类和处理。</p>
+<p>基本分为下面几大类：</p>
+<ul>
+<li><p>L代表List的命令</p>
+</li>
+<li><p>升级版命令</p>
+</li>
+<li><p>阻塞命令</p>
+</li>
+</ul>
+<h2 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h2><h3 id="Llen"><a href="#Llen" class="headerlink" title="Llen"></a>Llen</h3><p>首先出场的是，简单的<code>Llen</code>命令，见名知意，是<em>List Len</em>的缩写，马上就会明白这个命令是统计某<em>key</em>所对应的列表的长度。如果列表并不存在，则返回0.用法如下：<code>Llen key</code></p>
+<h3 id="Lindex"><a href="#Lindex" class="headerlink" title="Lindex"></a>Lindex</h3><p><em>Lindex<em>根据索引获取列表中的元素，如果索引不在列表的区间范围，则返回空值(</em>nil</em>).是<em>List Index</em>的缩写。用法如下：<code>Lindex key index</code>。</p>
+<p>我们在了解了如何获取了列表中的某个元素，我们应该如果获取列表中某个区间，甚至是全部元素呢？下面，就该<code>Lrange</code>出场了。</p>
+<h3 id="Lrange"><a href="#Lrange" class="headerlink" title="Lrange"></a>Lrange</h3><p><em>Lrange<em>同样也是根据索引获取列表中的元素，是</em>List Range<em>的缩写。但是请注意，</em>Lrange<em>是通过</em>start<em>和</em>end<em>两个索引来获取两个索引中的全部元素的，其返回值还是一个列表，即原列表的子列表。用法：<code>Lrange key start end</code>。如果想获取全部元素，只需要将</em>start<em>和</em>end<em>分别设置为</em>0*和</em>-1*即可。</p>
+<p>当我们想在某个位置插入元素的时候，Redis为我们提供了很多命令，我们首先介绍<code>Linsert</code>，因为它只出现在<strong>L</strong>分组中，而且简单。</p>
+<h3 id="Linsert"><a href="#Linsert" class="headerlink" title="Linsert"></a>Linsert</h3><p>是<em>List Insert</em>的缩写。<em>Linsert</em>是在列表中的某个元素后插入一个元素。用法：<code>Linsert key [before|after] name value</code>请注意几点：</p>
+<ul>
+<li>必须是列表，否则报错</li>
+<li><em>name</em>在列表中必须存在，否则返回0，对列表不进行操作</li>
+<li>操作成功后，返回列表长度</li>
+</ul>
+<p>当我们需要修改列表中某个位置上的元素的时候，我们就需要使用<code>Lset</code>命令了。</p>
+<h3 id="Lset"><a href="#Lset" class="headerlink" title="Lset"></a>Lset</h3><p>是<em>List Set</em>的缩写<em>Lset</em>根据索引，将列表中索引位置的元素设置为新值。<code>Lset key index value</code>。如果索引超过范围或者列表为空列表，则会返回一个错误。</p>
+<h3 id="Lrem"><a href="#Lrem" class="headerlink" title="Lrem"></a>Lrem</h3><p>是<em>List Remove</em>的缩写，意为从列表中删除元素。其命令为：<code>Lrem key count value</code>。命令的解读为，从<em>key</em>的列表中删除<em>count</em>个值为<em>value</em>的元素，并返回被移除元素的数量。其中，需要注意的一点是<em>count</em>的取值，<em>count</em>的大小为要删除的元素的个数，其正负性为从列表中开始查找的方向：</p>
+<ul>
+<li>正值： 从列表首向尾查找</li>
+<li>负值：从列表尾向首查找</li>
+<li>0：全部删除</li>
+</ul>
+<p>需要了解到，虽然返回值为移除元素的数量，而<em>count</em>是期望删除的数量，但这两者并不一定相等，不相等的情况，一般有：</p>
+<ul>
+<li>列表中不存在和<em>value</em>相等的元素，返回值总为 0</li>
+<li>期望删除的元素个数比列表中存在的元素个数多</li>
+<li>期望参数值为<em>0</em>，且元素存在于列表中</li>
+</ul>
+<h3 id="Ltrim"><a href="#Ltrim" class="headerlink" title="Ltrim"></a>Ltrim</h3><p>是<em>List Trim</em>的缩写，意为只保留列表中的区间元素，将其它部分删除。其命令为：<code>Ltrim key start end</code>。</p>
+<h3 id="Lpush"><a href="#Lpush" class="headerlink" title="Lpush"></a>Lpush</h3><p>是<em>List Push</em>的缩写，意为将一个或者多个元素插入到列表头部。其命令为：<code>Lpush key value1 ... valueN</code>.如果<em>key</em>不存在，则创建一个空列表，并执行<em>Lpush</em>操作。返回值为 操作完成后，列表的长度。</p>
+<h3 id="Rpush"><a href="#Rpush" class="headerlink" title="Rpush"></a>Rpush</h3><p>是<em>list Rigit Push<em>的缩写，这里将</em>list<em>省略了。命令和*</em>Lpush<strong>相似，只是元素的插入位置不再是列表头部，而是在列表尾部，即列表的</strong>最右边*<em>(</em>right</em>)。其命令为:<code>Rpush key value1 … valueN</code>。</p>
+<h3 id="Lpop"><a href="#Lpop" class="headerlink" title="Lpop"></a>Lpop</h3><p>是<em>List Pop</em>的缩写，意为取出列表中的第一个元素，其返回值为 列表的第一个元素。其命令为：<code>Lpop key</code></p>
+<h3 id="Rpop"><a href="#Rpop" class="headerlink" title="Rpop"></a>Rpop</h3><p>是<em>list Right Pop</em>的缩写，意为取出列表中的最后一个(最右边第一个)元素，其返回值为 列表最后一个元素。其命令为：<code>Rpop key</code>.</p>
+<h2 id="升级版命令"><a href="#升级版命令" class="headerlink" title="升级版命令"></a>升级版命令</h2><h3 id="Lpushx"><a href="#Lpushx" class="headerlink" title="Lpushx"></a>Lpushx</h3><p>是<em>List Push if eXist<em>的缩写，是</em>Lpush</em> 的升级版，意为只有当列表存在时候才会执行操作。语法和<em>Lpush</em>一样：<code>Lpushx key value1 … valueN</code>。与<em>Lpush</em>的区别：</p>
+<ul>
+<li><em>Lpush</em> 当列表不存在的时候，创建空列表，然后执行<em>Lpush</em>操作</li>
+<li><em>Lpushx</em>当列表不存在的时候，不执行操作</li>
+</ul>
+<h3 id="Rpushx"><a href="#Rpushx" class="headerlink" title="Rpushx"></a>Rpushx</h3><p>是<em>List Right Push if eXists</em>的缩写，同样是<em>Rpush</em>的升级版。是<em>Lpushx</em>对应的从列表尾插入的方法。其命令为：<code>Rpushx key value1 … valueN</code>。</p>
+<h3 id="Rpoplpush"><a href="#Rpoplpush" class="headerlink" title="Rpoplpush"></a>Rpoplpush</h3><p>是<em>List Right Pop List Push</em>的缩写，意为从列表尾部取出一个元素，并添加到另一个列表的头部。其命令为<code>Rpoplpush source destation</code>;返回值为<strong>移动的元素</strong>。</p>
+<p>当<em>source</em>和<em>destation</em>为同一个<em>key</em>值时，相当于将一个元素从列表尾部移动到列表头部。</p>
+<h2 id="含有（B）阻塞的命令"><a href="#含有（B）阻塞的命令" class="headerlink" title="含有（B）阻塞的命令"></a>含有（B）阻塞的命令</h2><h3 id="BLpop-BRpop-BRpopLpush"><a href="#BLpop-BRpop-BRpopLpush" class="headerlink" title="BLpop,BRpop,BRpopLpush"></a>BLpop,BRpop,BRpopLpush</h3><p>分别是<em>Block List Pop</em>、<em>Block list Right Pop</em>和<em>“Block Right list Pop List Push</em>的缩写。为<em>Lpop</em>、<em>Rpop</em>和<em>RpopLpush</em>的<strong>可阻塞</strong>版。以<em>BLpop</em>为例，其命令为：<code>BLpop List1 List2 … ListN timeout</code>。Redis 会从尝试从所列的列表中弹出其中存在的第一元素，如果没有元素可以弹出，则会阻塞列表，直到有元素可以弹出。或者超时。</p>
+<p>其中，阻塞列表需要满足<em>所列的列表中，任何列表中此时都没有元素</em>。</p>
+<p>阻塞停止的条件满足下面任何一个即可：</p>
+<ul>
+<li>超时</li>
+<li>有操作向所列的列表中添加了元素，使得所列的列表中有元素可以弹出</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>超时： nil</li>
+<li>非超时：一个含有<strong>2个</strong>元素的列表<ol>
+<li>被弹出元素所属的 <em>key</em></li>
+<li>被弹出元素的值</li>
+</ol>
+</li>
+</ul>
+<p><em>BRpop</em>的命令：<code>BRpop List1 List2 … ListN timeout</code>。返回值：同<strong>BLpop</strong></p>
+<p><em>BRpopLpush</em>的命令：<code>BRpopLpush source destation timeout</code>。返回值：</p>
+<ul>
+<li>超时： nil</li>
+<li>非超时：一个含有<strong>2个</strong>元素的列表<ol>
+<li>被弹出的元素的值</li>
+<li>等待时长</li>
+</ol>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们可以从数据的<strong>增</strong>，<strong>删</strong>，<strong>改</strong>，<strong>查</strong>对<em>List</em>命令进行一下分类：</p>
+<table>
+<thead>
+<tr>
+<th align="center">增</th>
+<th>删</th>
+<th>改</th>
+<th align="left">查</th>
+<th>其它</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Lpush</td>
+<td>LPop</td>
+<td>Lset</td>
+<td align="left">Lindex</td>
+<td>BRpopLpush</td>
+</tr>
+<tr>
+<td align="center">Rpush</td>
+<td>RPop</td>
+<td></td>
+<td align="left">Lrange</td>
+<td>RpopLpush</td>
+</tr>
+<tr>
+<td align="center">Lpushx</td>
+<td>BLpop</td>
+<td></td>
+<td align="left">Llen</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">Linsert</td>
+<td>BRPop</td>
+<td></td>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center">Rpushx</td>
+<td>Lrem</td>
+<td></td>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>Ltrim</td>
+<td></td>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td></td>
+<td></td>
+<td align="left"></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>通过上边的讲解和最后的分类汇总，我相信，大部分人已经对 Redis 的List有了初步的了解。下一篇文章，我们会对Set集合或者对key命令做一定的简单了解。欢迎大家指导。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+            <div id="vcomments"></div>
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>silence_zhpf</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/hackers267" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">4 <p>Articles</p></a></li>
+                    <li><a href="/categories">2 <p>Categories</p></a></li>
+                    <li><a href="/tags">9 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>Contents</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis-列表-List-命令"><span class="toc-number">1.</span> <span class="toc-text">Redis 列表(List)命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础命令"><span class="toc-number">1.2.</span> <span class="toc-text">基础命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Llen"><span class="toc-number">1.2.1.</span> <span class="toc-text">Llen</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lindex"><span class="toc-number">1.2.2.</span> <span class="toc-text">Lindex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lrange"><span class="toc-number">1.2.3.</span> <span class="toc-text">Lrange</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linsert"><span class="toc-number">1.2.4.</span> <span class="toc-text">Linsert</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lset"><span class="toc-number">1.2.5.</span> <span class="toc-text">Lset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lrem"><span class="toc-number">1.2.6.</span> <span class="toc-text">Lrem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ltrim"><span class="toc-number">1.2.7.</span> <span class="toc-text">Ltrim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lpush"><span class="toc-number">1.2.8.</span> <span class="toc-text">Lpush</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rpush"><span class="toc-number">1.2.9.</span> <span class="toc-text">Rpush</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lpop"><span class="toc-number">1.2.10.</span> <span class="toc-text">Lpop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rpop"><span class="toc-number">1.2.11.</span> <span class="toc-text">Rpop</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#升级版命令"><span class="toc-number">1.3.</span> <span class="toc-text">升级版命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Lpushx"><span class="toc-number">1.3.1.</span> <span class="toc-text">Lpushx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rpushx"><span class="toc-number">1.3.2.</span> <span class="toc-text">Rpushx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rpoplpush"><span class="toc-number">1.3.3.</span> <span class="toc-text">Rpoplpush</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#含有（B）阻塞的命令"><span class="toc-number">1.4.</span> <span class="toc-text">含有（B）阻塞的命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#BLpop-BRpop-BRpopLpush"><span class="toc-number">1.4.1.</span> <span class="toc-text">BLpop,BRpop,BRpopLpush</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.5.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2020
+        <span class="gradient-text">
+            silence_zhpf
+        </span>.
+        Powered by <a href="https://hackers267.github.io/" title="silence_zhpf" target="_blank" rel="noopener">silence_zhpf</a>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+
+
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+    
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+    <script>
+
+        var valine = new Valine();
+
+        function initValine(path) {
+            if (!path) path = window.location.pathname;
+            let language = 'zh-Cn';
+            if (!language) {
+                language = 'en';
+            } else {
+                language = language.toLowerCase();
+            }
+            valine.init({
+                el: '#vcomments',
+                appId: 'pYAJIq3xvX6S9eYsb96qezTK-gzGzoHsz',
+                appKey: 'PkEFvYpiQw9qQRoOmRUgftF3',
+                notify: 'false',
+                verify: 'true',
+                avatar: 'robohash',
+                placeholder: 'Leave your throughs behind~',
+                visitor: 'true',
+                path: path,
+                lang: language
+            });
+        }
+
+        $(document).ready(function () {
+            initValine();
+        });
+    </script>
+
+
+
+</html>

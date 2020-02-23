@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+<html lang="zh-Cn" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Redis Key(键)命令 - 小黑开发</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="JS TS NodeJs 数据库 前端 JavaScript TypeScript Vue React Git,"> 
+    <meta name="description" content="Redis 键(key)命令基础命令对于Redis的key命令，我们来了解一下常用的几个命令，我们平时使用频率比较高的几个命令。
+Del这个命令其实很简单啦，就是删除指定的key。其命令也很简单，为,"> 
+    <meta name="author" content="silence_zhpf"> 
+    <link rel="alternative" href="atom.xml" title="小黑开发" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">小黑开发</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="http://hackers267.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">Redis Key(键)命令</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/Redis"><b>「
+                    </b>REDIS<b> 」</b></a>
+                
+                二月 23, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2020/02/23/Redis-Key-%E9%94%AE-%E5%91%BD%E4%BB%A4/" title="Redis Key(键)命令" class="">Redis Key(键)命令</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    5.3k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    5 mins.
+                </span>
+                
+                
+                <span id="/2020/02/23/Redis-Key-键-命令/" class="leancloud_visitors" data-flag-title="Redis Key(键)命令">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <i class="leancloud-visitors-count">1000000</i>
+                </span>
+                
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/key/" rel="tag">key</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/%E9%94%AE/" rel="tag">键</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="Redis-键-key-命令"><a href="#Redis-键-key-命令" class="headerlink" title="Redis 键(key)命令"></a>Redis 键(key)命令</h1><h2 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h2><p>对于Redis的<em>key</em>命令，我们来了解一下常用的几个命令，我们平时使用频率比较高的几个命令。</p>
+<h3 id="Del"><a href="#Del" class="headerlink" title="Del"></a>Del</h3><p>这个命令其实很简单啦，就是删除指定的<em>key</em>。其命令也很简单，为：<code>Del key1 ... keyN</code>。返回值为删除的<em>key</em>的数量。</p>
+<h3 id="Exists"><a href="#Exists" class="headerlink" title="Exists"></a>Exists</h3><p>这个命令和<em>Del</em>命令一样简单，就是检查指定的<em>key</em>是否存在。其命令同样简单，为：<code>Exsits key1 ... keyN</code>。返回值为存在的<em>key</em>的数量。这里分情况解释一下：</p>
+<ul>
+<li>当只查询一个<em>key</em>是否存在的时候，<ul>
+<li><strong>1</strong>-&gt;<strong>存在</strong></li>
+<li><strong>0</strong>-&gt;<strong>不存在</strong></li>
+</ul>
+</li>
+<li>当查询多个<em>key</em>的时候<ul>
+<li><strong>0</strong>-&gt;<strong>都不存在</strong></li>
+<li>查询数量<strong>等于</strong>返回值大小，所有查询值都存在</li>
+<li>查询数量<strong>小于</strong>返回值大小，有部分的<em>key</em>不存在，但Redis没有告诉我们哪个不存在</li>
+</ul>
+</li>
+</ul>
+<h3 id="Expire"><a href="#Expire" class="headerlink" title="Expire"></a>Expire</h3><p>这个命令相对来说就复杂了一些，但也算简单的。它的作用就是给指定的<em>key<em>设置过期时间，单位为*</em>秒*<em>。其命令形式为：<code>Expire key timeout</code>。</em>key<em>只在指定的时间内有效，过了有效时间，</em>key<em>将不可用。当设置成功的时候，会返回1，而当</em>key<em>不存在或者不能给</em>key<em>设置过期时间的时候，将返回0。有人说了，这个命令给</em>key<em>设置的过期时间为</em>秒<em>，那我们有没有办法设置过期时间或者我们能不能设置某个值在某个具体的时间失效，而不用自己去计算呢？其实，Redis已经为我们准备了相应的命令：</em>PExpire</em>,<em>ExpireAt</em>和<em>PExpireAT</em>。</p>
+<h3 id="PExpire"><a href="#PExpire" class="headerlink" title="PExpire"></a>PExpire</h3><p>这个命令和<em>Expire<em>是一样的，只是指定的时间的单位由</em>秒</em>-&gt;<em>毫秒</em>。</p>
+<h3 id="ExpireAt"><a href="#ExpireAt" class="headerlink" title="ExpireAt"></a>ExpireAt</h3><p>这个命令的作用和<em>Expire</em>也是一直的，也是设置过期时间，但设置的不再是时间长度，而是指定具体到何时过期。值是一个具体的时间点，为时间戳。命令为：<code>ExpireAt key timestamp</code>。</p>
+<h3 id="PExpireAt"><a href="#PExpireAt" class="headerlink" title="PExpireAt"></a>PExpireAt</h3><p>和<em>ExpireAt<em>作用一致，区别在于时间戳的单位</em>不再是秒</em>,而是<strong>毫秒时间戳</strong>。</p>
+<p>既然我们已经为<em>key</em>设置了过期时间，我们总得用办法知道，这个<em>key</em>还可以生存多长时间吧，在这个时候，我们就需要使用<em>TTL</em>和<em>PTTL</em>命令了。没错，这两个命令的区别在于，<em>TTL</em>的单位为<strong>秒</strong>，<em>PTTL</em>的单位为<strong>毫秒</strong>，你一定猜到了，对吧？:laughing:</p>
+<h3 id="TTL"><a href="#TTL" class="headerlink" title="TTL"></a>TTL</h3><p>是单词<em>Time To Live</em>的缩写，记住这个单词，这个命令和这个命令的作用相信你已经记住个80%~90%。其命令为：<code>TTL key</code>。返回值：</p>
+<ul>
+<li>-2 key不存在</li>
+<li>-1 key没有设置过期时间</li>
+<li>其他值：剩余的生存时间</li>
+</ul>
+<h3 id="PTTL"><a href="#PTTL" class="headerlink" title="PTTL"></a>PTTL</h3><p>和<em>TTL</em>一样，只是剩余时间的单位为<strong>毫秒</strong>。</p>
+<p>我们现在已经知道如何给某个<em>key</em>设置过期时间，以及查询其剩余的生存时间，那当我们想将这个<em>key</em>设置为永久生效，即取消过期时间的时候，我们应该怎么办呢？这个时候，我闷就用到了<em>Persist</em>命令了。</p>
+<h3 id="Persist"><a href="#Persist" class="headerlink" title="Persist"></a>Persist</h3><p>这个命令的形式为：<code>Persist key</code>。就是这么简单，这样我们就可以取消该<em>key</em>的过期时间了。当过期时间取消成功的时候，返回值为<strong>1</strong>。而当<em>key</em>不存在或者<em>key</em>美誉设置过期时间的时候，返回<strong>0</strong>。</p>
+<h3 id="Type"><a href="#Type" class="headerlink" title="Type"></a>Type</h3><p>查询<em>key</em>存储值的类型，返回值为以下之一：</p>
+<ul>
+<li>string 字符串</li>
+<li>list 列表</li>
+<li>set 集合</li>
+<li>zset 有序集合</li>
+<li>hash 哈希表</li>
+<li>none <em>key</em>不存在</li>
+</ul>
+<h3 id="Rename"><a href="#Rename" class="headerlink" title="Rename"></a>Rename</h3><p>修改<em>key</em>的名称。很简单吧，其语法也简单：<code>Rename old_key new_key</code>。请注意，在这两种情况下，会返回错误：</p>
+<ul>
+<li>old_key 不存在</li>
+<li>old_key 和 new_key 相同</li>
+</ul>
+<p><strong>注意</strong>,当<em>new_key</em>已经存在的时候，旧值会被覆盖！！！</p>
+<h3 id="RenameNx"><a href="#RenameNx" class="headerlink" title="RenameNx"></a>RenameNx</h3><p>和<em>Rename</em>一样，也是给<em>key</em>改名，但只有当<em>new_key</em>不存在的时候才会执行。并且成功后返回<strong>1</strong>，<em>new_key</em>已经存在时，返回<strong>0</strong>。这个命令可以避免当<em>new_key</em>已经存在的时候，不小心覆盖旧值的问题。</p>
+<h3 id="Keys"><a href="#Keys" class="headerlink" title="Keys"></a>Keys</h3><p>按照给定<strong>正则表达式</strong>查找符合此模式的<em>key</em>。其命令为：<code>keys pattern</code>返回值为查询到的值组成的<em>列表</em>。当需要查找所有值的时候，可使用<code>keys *</code>。</p>
+<h3 id="RandomKey"><a href="#RandomKey" class="headerlink" title="RandomKey"></a>RandomKey</h3><p>顾名思义，这个命令就是从当前数据库中随机返回一个<em>key</em>.那么，当数据库中没有<em>key</em>时，会返回什么呢？答案是：<strong>nil</strong>。</p>
+<h3 id="Move"><a href="#Move" class="headerlink" title="Move"></a>Move</h3><p>这个命令将指定的<em>key</em>迁移到指定的数据库中。命令为：<code>Move key destiantion</code>。当迁移成功的时候，返回<strong>1</strong>，失败，返回<strong>0</strong>。</p>
+<p>注意，如果当前<em>key</em>已经存在于目标数据库，则会迁移失败。</p>
+<h3 id="Dump"><a href="#Dump" class="headerlink" title="Dump"></a>Dump</h3><p>序列化给定的<em>key</em>，被返回被序列化的值。</p>
+<h2 id="Key-命令总结"><a href="#Key-命令总结" class="headerlink" title="Key 命令总结"></a>Key 命令总结</h2><p>梳理一下Redis中的<em>key</em>相关的命令：</p>
+<ul>
+<li>过期时间有关系的有：<code>Expire</code>,<code>Pexpire</code>,<code>ExpireAt</code>,<code>PExipreAt</code>,<code>TTL</code>,<code>PTTL</code>和<code>Persist</code>。</li>
+<li>重命名的：<code>Rename</code>和<code>RenameNx</code></li>
+<li>是否存在的：<code>Exists</code></li>
+<li>随机返回的：<code>RandomKey</code></li>
+<li>查询列举的：<code>Keys</code>,<code>Type</code></li>
+<li>移动删除的：<code>Move</code>,<code>Del</code></li>
+<li>序列化的：<code>Dump</code></li>
+</ul>
+<p>最终梳理完了<em>key</em>相关的这几个命令，发现其实这几个命令也不是很难理解。更深入的时候和体验，需要我们慢慢在使用中体会和挖掘。</p>
+<p>希望可以得到大家的关注和支持！！！</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+            <div id="vcomments"></div>
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>silence_zhpf</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/hackers267" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">4 <p>Articles</p></a></li>
+                    <li><a href="/categories">2 <p>Categories</p></a></li>
+                    <li><a href="/tags">9 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>Contents</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis-键-key-命令"><span class="toc-number">1.</span> <span class="toc-text">Redis 键(key)命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础命令"><span class="toc-number">1.1.</span> <span class="toc-text">基础命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Del"><span class="toc-number">1.1.1.</span> <span class="toc-text">Del</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exists"><span class="toc-number">1.1.2.</span> <span class="toc-text">Exists</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Expire"><span class="toc-number">1.1.3.</span> <span class="toc-text">Expire</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PExpire"><span class="toc-number">1.1.4.</span> <span class="toc-text">PExpire</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ExpireAt"><span class="toc-number">1.1.5.</span> <span class="toc-text">ExpireAt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PExpireAt"><span class="toc-number">1.1.6.</span> <span class="toc-text">PExpireAt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TTL"><span class="toc-number">1.1.7.</span> <span class="toc-text">TTL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PTTL"><span class="toc-number">1.1.8.</span> <span class="toc-text">PTTL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Persist"><span class="toc-number">1.1.9.</span> <span class="toc-text">Persist</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Type"><span class="toc-number">1.1.10.</span> <span class="toc-text">Type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rename"><span class="toc-number">1.1.11.</span> <span class="toc-text">Rename</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RenameNx"><span class="toc-number">1.1.12.</span> <span class="toc-text">RenameNx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Keys"><span class="toc-number">1.1.13.</span> <span class="toc-text">Keys</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RandomKey"><span class="toc-number">1.1.14.</span> <span class="toc-text">RandomKey</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Move"><span class="toc-number">1.1.15.</span> <span class="toc-text">Move</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dump"><span class="toc-number">1.1.16.</span> <span class="toc-text">Dump</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Key-命令总结"><span class="toc-number">1.2.</span> <span class="toc-text">Key 命令总结</span></a></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2020
+        <span class="gradient-text">
+            silence_zhpf
+        </span>.
+        Powered by <a href="https://hackers267.github.io/" title="silence_zhpf" target="_blank" rel="noopener">silence_zhpf</a>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+
+
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+    
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+    <script>
+
+        var valine = new Valine();
+
+        function initValine(path) {
+            if (!path) path = window.location.pathname;
+            let language = 'zh-Cn';
+            if (!language) {
+                language = 'en';
+            } else {
+                language = language.toLowerCase();
+            }
+            valine.init({
+                el: '#vcomments',
+                appId: 'pYAJIq3xvX6S9eYsb96qezTK-gzGzoHsz',
+                appKey: 'PkEFvYpiQw9qQRoOmRUgftF3',
+                notify: 'false',
+                verify: 'true',
+                avatar: 'robohash',
+                placeholder: 'Leave your throughs behind~',
+                visitor: 'true',
+                path: path,
+                lang: language
+            });
+        }
+
+        $(document).ready(function () {
+            initValine();
+        });
+    </script>
+
+
+
+</html>

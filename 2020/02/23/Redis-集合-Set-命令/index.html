@@ -1,0 +1,486 @@
+
+<!DOCTYPE html>
+<html lang="zh-Cn" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Redis 集合(Set)命令 - 小黑开发</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="JS TS NodeJs 数据库 前端 JavaScript TypeScript Vue React Git,"> 
+    <meta name="description" content="Redis 集合(Set)命令前言通过对Redis中集合(Set)命令的概览，发现集合命令本身并没有太大的难点。其主要还是对于数学集合的一些操作，相对于List类型来说，还是简单许多的。集合和列表的,"> 
+    <meta name="author" content="silence_zhpf"> 
+    <link rel="alternative" href="atom.xml" title="小黑开发" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">小黑开发</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="http://hackers267.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">Redis 集合(Set)命令</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/Redis"><b>「
+                    </b>REDIS<b> 」</b></a>
+                
+                二月 23, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2020/02/23/Redis-%E9%9B%86%E5%90%88-Set-%E5%91%BD%E4%BB%A4/" title="Redis 集合(Set)命令" class="">Redis 集合(Set)命令</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    5k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    5 mins.
+                </span>
+                
+                
+                <span id="/2020/02/23/Redis-集合-Set-命令/" class="leancloud_visitors" data-flag-title="Redis 集合(Set)命令">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <i class="leancloud-visitors-count">1000000</i>
+                </span>
+                
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Set/" rel="tag">Set</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/%E9%9B%86%E5%90%88/" rel="tag">集合</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="Redis-集合-Set-命令"><a href="#Redis-集合-Set-命令" class="headerlink" title="Redis 集合(Set)命令"></a>Redis 集合(Set)命令</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过对Redis中集合(<em>Set</em>)命令的概览，发现集合命令本身并没有太大的难点。其主要还是对于数学集合的一些操作，相对于<em>List</em>类型来说，还是简单许多的。集合和列表的区别在于，集合是没有顺序的，同时，集合中也不存在相同的元素，即同一个元素在集合中只能出现一次。</p>
+<h2 id="初级命令"><a href="#初级命令" class="headerlink" title="初级命令"></a>初级命令</h2><h3 id="SAdd"><a href="#SAdd" class="headerlink" title="SAdd"></a>SAdd</h3><p>从命令的命名中，我们就可以了解到，这儿命令是向集合中添加元素，其是<em>Set Add</em>的缩写。其命令为：<code>SAdd key value1 …valueN</code>是对集合的<em>增</em>操作。这个命令不仅仅可以向集合中添加一个元素，而且可以添加多个元素。但是请注意，由于集合的特性，当你向集合中添加相同的元素或者集合中以及存在要添加的元素，这个元素将被忽略。该命令的返回值为：成功添加的元素数量。</p>
+<p>既然集合是没有顺序的，那么集合中自然就不存在像列表中的那些在<em>尾部插入</em>，<em>首部插入</em>，<em>索引插入</em>这样的命令，只需要一个插入命令即可。当然，当我们知道了如何向集合中插入命令，我们就需要知道如何查询集合中具体元素和元素个数的命令，在这个时候，我们就需要使用这样的两个命令了：</p>
+<ul>
+<li>SCard：查询集合中元素的数量</li>
+<li>SMembers：查询聚合中含有那些具体元素</li>
+</ul>
+<h3 id="SCard"><a href="#SCard" class="headerlink" title="SCard"></a>SCard</h3><p>这个命令是<em>Set Card</em>的缩写，是用来查询集合中元素的数量的。其用法很简单：<code>SCard key</code>，是对集合的<em>查</em>操作。这个命令返回元素中包含多少个元素的个数，但集合不存在的时候，返回值为<strong>0</strong>。</p>
+<h3 id="SMembers"><a href="#SMembers" class="headerlink" title="SMembers"></a>SMembers</h3><p>这个命令是<em>Set Members</em>d 缩写。顾名思义，是用来查询集合中具体的元素的，是对集合的<em>查</em>操作。其用法和<em>SCard</em>同样简单：<code>SMembers key</code>。返回集合中具体的元素。</p>
+<h3 id="SRem"><a href="#SRem" class="headerlink" title="SRem"></a>SRem</h3><p>这个命令是<em>Set Remove</em>的缩写。就是从集合中移除指定的一个或者多个元素。是对集合的<em>删</em>操作。其命令和<em>SAdd</em>同样简单：<code>SRem key value1 … valueN</code>。集合中不存在的元素将会被忽略。返回值为成功删除的个数。</p>
+<h2 id="升级命令"><a href="#升级命令" class="headerlink" title="升级命令"></a>升级命令</h2><p>我们已经接触到了Redis中对集合的简单的<em>增</em>，<em>删</em>，<em>查</em>命令。但我们并没有涉及到集合的<em>改</em>命令，因为Redis并没有为我们提供这样的命令。为什么呢？因为在集合中，我们并不需要精确的去查找某个元素，如果我们需要使用集合中的某个精确的元素，那我们为什么还有去在集合中查找呢？直接使用不就好了吗？如果我们需要确认集合中是否有这个元素，或者我们需要随机的访问集合中的某个或者某几个元素，Redis还是为我们提供了相关的命令的。那就让我们来看看吧！</p>
+<h3 id="SIsMember"><a href="#SIsMember" class="headerlink" title="SIsMember"></a>SIsMember</h3><p>确定某个元素是否属于集合或者说是在集合中是否存在指定的元素。其命令为：<code>SIsMember key value</code>。当元素存在的时候，返回<strong>1</strong>。不存在返回<strong>0</strong>。这样，当我们需要使用集合中某个精确的元素的时候，我们就可以先使用<em>SIsMember</em>来确定是否存在于集合中，如果存在，直接使用，不存在则可以先<code>SAdd</code>然后使用。</p>
+<p>那么我们怎么使用集合中已经存在的随机某个或者某几个元素呢？这个时候，我们就需要使用<code>SRandMember</code>命令了。</p>
+<h3 id="SRandMember"><a href="#SRandMember" class="headerlink" title="SRandMember"></a>SRandMember</h3><p>这个命令用于从集合中随机选取某个或者某些个已经存在的元素，并返回。其命令是：<code>SRandMember key [count]</code>。在这里，参数<em>count</em>是可选的。参数<em>count</em>分一下集中情况：</p>
+<ul>
+<li>省略。从集合中随机返回一个元素</li>
+<li>正值。从集合中随机返回<em>count</em>个元素，并且元素不重复。当但<em>count</em>的值大于集合的大小的时候，会将整个集合返回。</li>
+<li>负值。从集合中随机返货<em>count</em>个元素，但元素可能重复。</li>
+</ul>
+<p>Redis的这个<em>SRandMember</em>的命令，为我们提供了可以从原来集合中随机访问不含重复元素的方法，也提供了随机访问含重复元素的方法。</p>
+<p>和<em>SRandMember</em>d相似的一个命令是<em>SPop</em>。</p>
+<h3 id="SPop"><a href="#SPop" class="headerlink" title="SPop"></a>SPop</h3><p>Redis的<em>SPop</em>命令用于移除并返回集合中的一个元素。它和命令<em>SRandMember</em>的相同之处是都是随机访问。不同之处如下：</p>
+<p>​    SPop：</p>
+<pre><code>+ 对集合有操作，会在集合中删除返回的元素
+    + 一次只能返回一个元素</code></pre><p>   SRandMember：</p>
+<ul>
+<li>不影响原集合的元素</li>
+<li>一次可以返回多个值</li>
+</ul>
+<h3 id="SMove"><a href="#SMove" class="headerlink" title="SMove"></a>SMove</h3><p><em>SMove</em>命令是将一个元素从<em>source</em>移动到<em>destation</em>中。如果<em>destation</em>中已经存在该元素，则该元素将被忽略。但此时该元素已经从<em>source</em>中删除。其命令为：<code>SMove source dest value</code>。如果<em>value</em>不存在于<em>source</em>，则返回<strong>0</strong>。不执行操作。</p>
+<h3 id="SScan"><a href="#SScan" class="headerlink" title="SScan"></a>SScan</h3><p>这个命令用于迭代集合中的元素，其命令为：<code>SScan key cursor [Match pattern] [Count count]</code>。其中的<em>pattern<em>用于模式匹配，如果包含这个参数，则只迭代符合模式的元素。如果指定</em>count</em>,则最多返回<em>count</em>个元素。</p>
+<h2 id="集合的其它操作"><a href="#集合的其它操作" class="headerlink" title="集合的其它操作"></a>集合的其它操作</h2><p>我们都知道，集合有交集，合集(又叫并集)，差集。那么Redis中的集合是否也支持这中操作呢？答案是肯定的。其对应的方法分别是<em>SInter</em>,<em>SUion<em>和</em>SDiff<em>。其对应的含有的存储命令为</em>SInterStore</em>,<em>SUionStore</em>和<em>SDiffStore</em>。这个几个命令的用法都是大同小异，所以，我这里只以<em>SUion</em>和<em>SUionStore</em>为例，来介绍一下其用法。</p>
+<h3 id="SUion"><a href="#SUion" class="headerlink" title="SUion"></a>SUion</h3><p>求多个集合的合集。其命令为：<code>SUion key1 … keyN</code>。返回合集成员的列表。</p>
+<h3 id="SUionStore"><a href="#SUionStore" class="headerlink" title="SUionStore"></a>SUionStore</h3><p>求多个集合的合集，并将结果存储在一下新的集合例。其命令为：<code>SUion destation key1 … keyN</code>。返回集合中元素的数量，而这几个集合的合集已经存储到了<em>destation</em>中。</p>
+<h3 id="SInter，SDiff，SInterStore，SDiffStore"><a href="#SInter，SDiff，SInterStore，SDiffStore" class="headerlink" title="SInter，SDiff，SInterStore，SDiffStore"></a>SInter，SDiff，SInterStore，SDiffStore</h3><p>这四个命令的用法和<em>SUion</em>、<em>SUionStore</em>是相似的，在此不再赘述。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过概览，我们知道Redis中集合的命令是不复杂的，只要我们在使用的过程中明确自己的需求和目的，这些命令已经可以满足我们平时对于集合的操作。更多的总结和坑还需要我们在实践中慢慢去体会，慢慢成长。</p>
+<p>文章中有什么瑕疵和需要改进的地方，希望大家之处改正。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+            <div id="vcomments"></div>
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>silence_zhpf</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/hackers267" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">4 <p>Articles</p></a></li>
+                    <li><a href="/categories">2 <p>Categories</p></a></li>
+                    <li><a href="/tags">9 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>Contents</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis-集合-Set-命令"><span class="toc-number">1.</span> <span class="toc-text">Redis 集合(Set)命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初级命令"><span class="toc-number">1.2.</span> <span class="toc-text">初级命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SAdd"><span class="toc-number">1.2.1.</span> <span class="toc-text">SAdd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SCard"><span class="toc-number">1.2.2.</span> <span class="toc-text">SCard</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SMembers"><span class="toc-number">1.2.3.</span> <span class="toc-text">SMembers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SRem"><span class="toc-number">1.2.4.</span> <span class="toc-text">SRem</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#升级命令"><span class="toc-number">1.3.</span> <span class="toc-text">升级命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SIsMember"><span class="toc-number">1.3.1.</span> <span class="toc-text">SIsMember</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SRandMember"><span class="toc-number">1.3.2.</span> <span class="toc-text">SRandMember</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPop"><span class="toc-number">1.3.3.</span> <span class="toc-text">SPop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SMove"><span class="toc-number">1.3.4.</span> <span class="toc-text">SMove</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SScan"><span class="toc-number">1.3.5.</span> <span class="toc-text">SScan</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集合的其它操作"><span class="toc-number">1.4.</span> <span class="toc-text">集合的其它操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SUion"><span class="toc-number">1.4.1.</span> <span class="toc-text">SUion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SUionStore"><span class="toc-number">1.4.2.</span> <span class="toc-text">SUionStore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SInter，SDiff，SInterStore，SDiffStore"><span class="toc-number">1.4.3.</span> <span class="toc-text">SInter，SDiff，SInterStore，SDiffStore</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.5.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2020
+        <span class="gradient-text">
+            silence_zhpf
+        </span>.
+        Powered by <a href="https://hackers267.github.io/" title="silence_zhpf" target="_blank" rel="noopener">silence_zhpf</a>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+
+
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+    
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+    <script>
+
+        var valine = new Valine();
+
+        function initValine(path) {
+            if (!path) path = window.location.pathname;
+            let language = 'zh-Cn';
+            if (!language) {
+                language = 'en';
+            } else {
+                language = language.toLowerCase();
+            }
+            valine.init({
+                el: '#vcomments',
+                appId: 'pYAJIq3xvX6S9eYsb96qezTK-gzGzoHsz',
+                appKey: 'PkEFvYpiQw9qQRoOmRUgftF3',
+                notify: 'false',
+                verify: 'true',
+                avatar: 'robohash',
+                placeholder: 'Leave your throughs behind~',
+                visitor: 'true',
+                path: path,
+                lang: language
+            });
+        }
+
+        $(document).ready(function () {
+            initValine();
+        });
+    </script>
+
+
+
+</html>
