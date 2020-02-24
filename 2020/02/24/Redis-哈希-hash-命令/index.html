@@ -5,12 +5,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Redis 集合(Set)命令 - 小黑开发</title>
+    <title>Redis 哈希(hash)命令 - 小黑开发</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="JS TS NodeJs 数据库 前端 JavaScript TypeScript Vue React Git,"> 
-    <meta name="description" content="Redis 集合(Set)命令前言通过对Redis中集合(Set)命令的概览，发现集合命令本身并没有太大的难点。其主要还是对于数学集合的一些操作，相对于List类型来说，还是简单许多的。集合和列表的,"> 
+    <meta name="description" content="Redis 哈希(hash)命令前言大概浏览了一下Redis中哈希Hash命令，发现当你对前边的字符串String，列表List和集合Set命令掌握的八九不离十的情况下，哈希Hash还是挺简单的。废,"> 
     <meta name="author" content="silence_zhpf"> 
     <link rel="alternative" href="atom.xml" title="小黑开发" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -57,7 +57,7 @@
     <div class="navigation animated fadeIn fast delay-1s">
         <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="http://hackers267.github.io">
         <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
-        <h3 class="subtitle">Redis 集合(Set)命令</h3>
+        <h3 class="subtitle">Redis 哈希(hash)命令</h3>
         <div class="social">
             <!--        <div class="like-icon">-->
             <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -90,26 +90,26 @@
                 <a href="/categories/数据库"><b>「
                     </b>数据库<b> 」</b></a>
                 
-                二月 23, 2020
+                二月 24, 2020
             </p>
-            <h3 class="post-title animated fadeInDown"><a href="/2020/02/23/Redis-%E9%9B%86%E5%90%88-Set-%E5%91%BD%E4%BB%A4/" title="Redis 集合(Set)命令" class="">Redis 集合(Set)命令</a>
+            <h3 class="post-title animated fadeInDown"><a href="/2020/02/24/Redis-%E5%93%88%E5%B8%8C-hash-%E5%91%BD%E4%BB%A4/" title="Redis 哈希(hash)命令" class="">Redis 哈希(hash)命令</a>
             </h3>
             
             <p class="post-count animated fadeInDown">
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>Words count</i>
-                    5k
+                    4.2k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
-                    5 mins.
+                    4 mins.
                 </span>
                 
                 
-                <span id="/2020/02/23/Redis-集合-Set-命令/" class="leancloud_visitors" data-flag-title="Redis 集合(Set)命令">
+                <span id="/2020/02/24/Redis-哈希-hash-命令/" class="leancloud_visitors" data-flag-title="Redis 哈希(hash)命令">
                     <b class="iconfont icon-read"></b> <i>Read count</i>
                     <i class="leancloud-visitors-count">1000000</i>
                 </span>
@@ -118,7 +118,7 @@
             </p>
             
             
-            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Set/" rel="tag">Set</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/%E9%9B%86%E5%90%88/" rel="tag">集合</a></li></ul>
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/%E5%93%88%E5%B8%8C/" rel="tag">哈希</a></li></ul>
             
         </div>
     </div>
@@ -139,43 +139,31 @@
 <div class="article">
     <div class='main'>
         <div class="content markdown animated fadeIn">
-            <h1 id="Redis-集合-Set-命令"><a href="#Redis-集合-Set-命令" class="headerlink" title="Redis 集合(Set)命令"></a>Redis 集合(Set)命令</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过对Redis中集合(<em>Set</em>)命令的概览，发现集合命令本身并没有太大的难点。其主要还是对于数学集合的一些操作，相对于<em>List</em>类型来说，还是简单许多的。集合和列表的区别在于，集合是没有顺序的，同时，集合中也不存在相同的元素，即同一个元素在集合中只能出现一次。</p>
-<h2 id="初级命令"><a href="#初级命令" class="headerlink" title="初级命令"></a>初级命令</h2><h3 id="SAdd"><a href="#SAdd" class="headerlink" title="SAdd"></a>SAdd</h3><p>从命令的命名中，我们就可以了解到，这儿命令是向集合中添加元素，其是<em>Set Add</em>的缩写。其命令为：<code>SAdd key value1 …valueN</code>是对集合的<em>增</em>操作。这个命令不仅仅可以向集合中添加一个元素，而且可以添加多个元素。但是请注意，由于集合的特性，当你向集合中添加相同的元素或者集合中以及存在要添加的元素，这个元素将被忽略。该命令的返回值为：成功添加的元素数量。</p>
-<p>既然集合是没有顺序的，那么集合中自然就不存在像列表中的那些在<em>尾部插入</em>，<em>首部插入</em>，<em>索引插入</em>这样的命令，只需要一个插入命令即可。当然，当我们知道了如何向集合中插入命令，我们就需要知道如何查询集合中具体元素和元素个数的命令，在这个时候，我们就需要使用这样的两个命令了：</p>
+            <h1 id="Redis-哈希-hash-命令"><a href="#Redis-哈希-hash-命令" class="headerlink" title="Redis 哈希(hash)命令"></a>Redis 哈希(hash)命令</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>大概浏览了一下Redis中哈希<em>Hash</em>命令，发现当你对前边的字符串<em>String</em>，列表<em>List</em>和集合<em>Set</em>命令掌握的八九不离十的情况下，哈希<em>Hash</em>还是挺简单的。废话不多说，我们这就开始。我们从最基础的开始。</p>
+<h2 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h2><h3 id="HSet"><a href="#HSet" class="headerlink" title="HSet"></a>HSet</h3><p><em>HSet</em>是<em>Hash Set</em>的缩写。这个命令将哈希表<em>key</em>中的字段<em>field</em>的值设为<em>value</em>。其命令为：<code>HSet key field value</code>。需要说明的是，这个命令在哈希表存在的时候，会将<em>field</em>字段的值设置为<em>value</em>。当哈希表不存在的时候，首先初始化一个哈希表，然后再执行<em>HSet</em>操作。返回值：</p>
 <ul>
-<li>SCard：查询集合中元素的数量</li>
-<li>SMembers：查询聚合中含有那些具体元素</li>
+<li>如果字段是在哈希表中新建的字段并且值设置成功，则返回<strong>1</strong>。</li>
+<li>如果该字段已经存在于哈希表中，并且字段的原值成功被新值覆盖，则返回<strong>0</strong>。</li>
 </ul>
-<h3 id="SCard"><a href="#SCard" class="headerlink" title="SCard"></a>SCard</h3><p>这个命令是<em>Set Card</em>的缩写，是用来查询集合中元素的数量的。其用法很简单：<code>SCard key</code>，是对集合的<em>查</em>操作。这个命令返回元素中包含多少个元素的个数，但集合不存在的时候，返回值为<strong>0</strong>。</p>
-<h3 id="SMembers"><a href="#SMembers" class="headerlink" title="SMembers"></a>SMembers</h3><p>这个命令是<em>Set Members</em>d 缩写。顾名思义，是用来查询集合中具体的元素的，是对集合的<em>查</em>操作。其用法和<em>SCard</em>同样简单：<code>SMembers key</code>。返回集合中具体的元素。</p>
-<h3 id="SRem"><a href="#SRem" class="headerlink" title="SRem"></a>SRem</h3><p>这个命令是<em>Set Remove</em>的缩写。就是从集合中移除指定的一个或者多个元素。是对集合的<em>删</em>操作。其命令和<em>SAdd</em>同样简单：<code>SRem key value1 … valueN</code>。集合中不存在的元素将会被忽略。返回值为成功删除的个数。</p>
-<h2 id="升级命令"><a href="#升级命令" class="headerlink" title="升级命令"></a>升级命令</h2><p>我们已经接触到了Redis中对集合的简单的<em>增</em>，<em>删</em>，<em>查</em>命令。但我们并没有涉及到集合的<em>改</em>命令，因为Redis并没有为我们提供这样的命令。为什么呢？因为在集合中，我们并不需要精确的去查找某个元素，如果我们需要使用集合中的某个精确的元素，那我们为什么还有去在集合中查找呢？直接使用不就好了吗？如果我们需要确认集合中是否有这个元素，或者我们需要随机的访问集合中的某个或者某几个元素，Redis还是为我们提供了相关的命令的。那就让我们来看看吧！</p>
-<h3 id="SIsMember"><a href="#SIsMember" class="headerlink" title="SIsMember"></a>SIsMember</h3><p>确定某个元素是否属于集合或者说是在集合中是否存在指定的元素。其命令为：<code>SIsMember key value</code>。当元素存在的时候，返回<strong>1</strong>。不存在返回<strong>0</strong>。这样，当我们需要使用集合中某个精确的元素的时候，我们就可以先使用<em>SIsMember</em>来确定是否存在于集合中，如果存在，直接使用，不存在则可以先<code>SAdd</code>然后使用。</p>
-<p>那么我们怎么使用集合中已经存在的随机某个或者某几个元素呢？这个时候，我们就需要使用<code>SRandMember</code>命令了。</p>
-<h3 id="SRandMember"><a href="#SRandMember" class="headerlink" title="SRandMember"></a>SRandMember</h3><p>这个命令用于从集合中随机选取某个或者某些个已经存在的元素，并返回。其命令是：<code>SRandMember key [count]</code>。在这里，参数<em>count</em>是可选的。参数<em>count</em>分一下集中情况：</p>
+<h3 id="HGet"><a href="#HGet" class="headerlink" title="HGet"></a>HGet</h3><p><em>HGet</em>是<em>Hash Get</em>的缩写。这个命令用来读取哈希表中指定的字段值。如果哈希表中不存在该字段，则返回<em>nil</em>。</p>
+<p>和<em>HGet</em>相似，存在一个命令，用来判断指定的字段是否存在于哈希表中，这个命令就是<em>HExists</em>。</p>
+<h3 id="HExists"><a href="#HExists" class="headerlink" title="HExists"></a>HExists</h3><p><em>HExists</em>是<em>Hash Exists</em>的缩写，用来判断指定的字段是否存在于哈希表中。其命令为：<code>HExists key field</code>。其返回值表示如下：</p>
 <ul>
-<li>省略。从集合中随机返回一个元素</li>
-<li>正值。从集合中随机返回<em>count</em>个元素，并且元素不重复。当但<em>count</em>的值大于集合的大小的时候，会将整个集合返回。</li>
-<li>负值。从集合中随机返货<em>count</em>个元素，但元素可能重复。</li>
+<li><strong>0</strong> -&gt; 哈希表中不存在指定的字段，或者<em>key</em>不存在</li>
+<li><strong>1</strong>-&gt; 哈希表中存在指定的字段。</li>
 </ul>
-<p>Redis的这个<em>SRandMember</em>的命令，为我们提供了可以从原来集合中随机访问不含重复元素的方法，也提供了随机访问含重复元素的方法。</p>
-<p>和<em>SRandMember</em>d相似的一个命令是<em>SPop</em>。</p>
-<h3 id="SPop"><a href="#SPop" class="headerlink" title="SPop"></a>SPop</h3><p>Redis的<em>SPop</em>命令用于移除并返回集合中的一个元素。它和命令<em>SRandMember</em>的相同之处是都是随机访问。不同之处如下：</p>
-<p>​    SPop：</p>
-<pre><code>+ 对集合有操作，会在集合中删除返回的元素
-    + 一次只能返回一个元素</code></pre><p>   SRandMember：</p>
-<ul>
-<li>不影响原集合的元素</li>
-<li>一次可以返回多个值</li>
-</ul>
-<h3 id="SMove"><a href="#SMove" class="headerlink" title="SMove"></a>SMove</h3><p><em>SMove</em>命令是将一个元素从<em>source</em>移动到<em>destation</em>中。如果<em>destation</em>中已经存在该元素，则该元素将被忽略。但此时该元素已经从<em>source</em>中删除。其命令为：<code>SMove source dest value</code>。如果<em>value</em>不存在于<em>source</em>，则返回<strong>0</strong>。不执行操作。</p>
-<h3 id="SScan"><a href="#SScan" class="headerlink" title="SScan"></a>SScan</h3><p>这个命令用于迭代集合中的元素，其命令为：<code>SScan key cursor [Match pattern] [Count count]</code>。其中的<em>pattern<em>用于模式匹配，如果包含这个参数，则只迭代符合模式的元素。如果指定</em>count</em>,则最多返回<em>count</em>个元素。</p>
-<h2 id="集合的其它操作"><a href="#集合的其它操作" class="headerlink" title="集合的其它操作"></a>集合的其它操作</h2><p>我们都知道，集合有交集，合集(又叫并集)，差集。那么Redis中的集合是否也支持这中操作呢？答案是肯定的。其对应的方法分别是<em>SInter</em>,<em>SUion<em>和</em>SDiff<em>。其对应的含有的存储命令为</em>SInterStore</em>,<em>SUionStore</em>和<em>SDiffStore</em>。这个几个命令的用法都是大同小异，所以，我这里只以<em>SUion</em>和<em>SUionStore</em>为例，来介绍一下其用法。</p>
-<h3 id="SUion"><a href="#SUion" class="headerlink" title="SUion"></a>SUion</h3><p>求多个集合的合集。其命令为：<code>SUion key1 … keyN</code>。返回合集成员的列表。</p>
-<h3 id="SUionStore"><a href="#SUionStore" class="headerlink" title="SUionStore"></a>SUionStore</h3><p>求多个集合的合集，并将结果存储在一下新的集合例。其命令为：<code>SUion destation key1 … keyN</code>。返回集合中元素的数量，而这几个集合的合集已经存储到了<em>destation</em>中。</p>
-<h3 id="SInter，SDiff，SInterStore，SDiffStore"><a href="#SInter，SDiff，SInterStore，SDiffStore" class="headerlink" title="SInter，SDiff，SInterStore，SDiffStore"></a>SInter，SDiff，SInterStore，SDiffStore</h3><p>这四个命令的用法和<em>SUion</em>、<em>SUionStore</em>是相似的，在此不再赘述。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过概览，我们知道Redis中集合的命令是不复杂的，只要我们在使用的过程中明确自己的需求和目的，这些命令已经可以满足我们平时对于集合的操作。更多的总结和坑还需要我们在实践中慢慢去体会，慢慢成长。</p>
-<p>文章中有什么瑕疵和需要改进的地方，希望大家之处改正。</p>
+<h3 id="HLen"><a href="#HLen" class="headerlink" title="HLen"></a>HLen</h3><p><em>HLen</em>是<em>Hash Len</em>的缩写，用来获取哈希表中字段的数量。其命令为：<code>HLen key</code>。返回值为哈希表中字段的数量。当<em>key</em>不存在的时候，返回<strong>0</strong>。</p>
+<h3 id="HDel"><a href="#HDel" class="headerlink" title="HDel"></a>HDel</h3><p><em>HDel</em>是<em>Hash Del</em>的缩写，用来删除哈希表中一个或者多个指定的字段，如果指定的字段不存在于哈希表中。那么，这个字段将会被忽略。其命令为：<code>HDel key field1 … fieldN</code>。返回值为被成功删除的字段。</p>
+<h2 id="升级命令"><a href="#升级命令" class="headerlink" title="升级命令"></a>升级命令</h2><p>我们已经大致上了解了Redis中对哈希操作的一些基础命令。那么现在就让我们先更多的了解一下稍微<em>高级</em>的命令吧。</p>
+<h3 id="HMSet"><a href="#HMSet" class="headerlink" title="HMSet"></a>HMSet</h3><p><em>HMSet</em>是<em>Hash Multi Set</em>的缩写，这个命令可以将多个<em>field-value</em>对设置到哈希表中。有了这个命令，就可以让我们多次调用<em>HSet</em>来给哈希表赋值了。其命令为：<code>HMSet key field1 value1 ... fieldN valueN</code>。如果命令执行成功，返回OK。</p>
+<h3 id="HMGet"><a href="#HMGet" class="headerlink" title="HMGet"></a>HMGet</h3><p><em>HMGet</em>是<em>Hash Multi Get</em>的缩写，这个命令可以同时获取哈希表中的多个字段的值，其最后的返回值和字段是相对应的，如果某个字段在哈希表中不存在，则该字段对应的返回值为<em>nil</em>。其命令：<code>HMGet key field1 … fieldN</code>。</p>
+<h3 id="HGetAll"><a href="#HGetAll" class="headerlink" title="HGetAll"></a>HGetAll</h3><p><em>HGetAll</em>是<em>Hash Get All</em>的缩写。这个命令用来获取哈希表中的所有字段和所有的值，其返回格式也是一一对应的，一个字段后跟着一个值。命令很简单：<code>HGetAll key</code>。返回值是以列表形式存在的。</p>
+<h3 id="HKeys"><a href="#HKeys" class="headerlink" title="HKeys"></a>HKeys</h3><p><em>HKeys</em>是<em>Hash Keys</em>的缩写。这个命令可以获取哈希表中的所有字段名。其命令为：<code>HKeys key</code>。返回值为一个包含哈希表中所有字段的列表。</p>
+<h3 id="HVals"><a href="#HVals" class="headerlink" title="HVals"></a>HVals</h3><p><em>HVals</em>是<em>Hash Values</em>的缩写。这个命令是和<em>HKeys</em>相对应的命令，用来获取哈希表中的所有字段值。其命令为：<code>HVals key</code>。返回值为一个包好哈希表中所有字段值的列表。</p>
+<h3 id="HSetNX"><a href="#HSetNX" class="headerlink" title="HSetNX"></a>HSetNX</h3><p><em>HSetNX</em>是<em>Hash Set if Not Exists</em>的缩写。其命令是用来创建哈希表中的字段值，当字段已经存在哈希表中的时候，不会执行操作。设置成功，返回<strong>1</strong>，否则返回<strong>0</strong>。</p>
+<h3 id="HIncrBy"><a href="#HIncrBy" class="headerlink" title="HIncrBy"></a>HIncrBy</h3><p><em>HIncrBy</em>是<em>Hash Increment By</em>的缩写，其命令用来为哈希表中某个字段的整数值增加某个量。其命令为：<code>HIncrBy key field number</code>。此增量可为正数，也可为负数。当为负数的时候，相当于从原值减去此值。如果指定的字段不存在，则默认此字段为0.返回值为执行命令后，哈希表中该字段的值。</p>
+<h3 id="HIncrByFloat"><a href="#HIncrByFloat" class="headerlink" title="HIncrByFloat"></a>HIncrByFloat</h3><p><em>HIncrByFloat</em>是<em>Hash Increment By Float</em>的缩写。命令为：<code>HIncrByFloat key field number</code>。和<em>HIncrBy</em>的区别在于<em>number</em>值可是小数。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>了解完了Redis中的哈希表，我们就已经了解了Redis中<em>五种<em>数据结构中的四种(</em>String<em>，</em>List<em>，</em>Set<em>和</em>Hash</em>)。最后剩下的就只有有序集合<em>Sorted Set</em>了。让我们明天再一起了解一下吧。</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls"
@@ -223,7 +211,7 @@
             <div class="box sticky animated fadeInRight faster">
                 <div id="toc" class="subbox">
                     <h4>Contents</h4>
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis-集合-Set-命令"><span class="toc-number">1.</span> <span class="toc-text">Redis 集合(Set)命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初级命令"><span class="toc-number">1.2.</span> <span class="toc-text">初级命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SAdd"><span class="toc-number">1.2.1.</span> <span class="toc-text">SAdd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SCard"><span class="toc-number">1.2.2.</span> <span class="toc-text">SCard</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SMembers"><span class="toc-number">1.2.3.</span> <span class="toc-text">SMembers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SRem"><span class="toc-number">1.2.4.</span> <span class="toc-text">SRem</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#升级命令"><span class="toc-number">1.3.</span> <span class="toc-text">升级命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SIsMember"><span class="toc-number">1.3.1.</span> <span class="toc-text">SIsMember</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SRandMember"><span class="toc-number">1.3.2.</span> <span class="toc-text">SRandMember</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPop"><span class="toc-number">1.3.3.</span> <span class="toc-text">SPop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SMove"><span class="toc-number">1.3.4.</span> <span class="toc-text">SMove</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SScan"><span class="toc-number">1.3.5.</span> <span class="toc-text">SScan</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集合的其它操作"><span class="toc-number">1.4.</span> <span class="toc-text">集合的其它操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SUion"><span class="toc-number">1.4.1.</span> <span class="toc-text">SUion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SUionStore"><span class="toc-number">1.4.2.</span> <span class="toc-text">SUionStore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SInter，SDiff，SInterStore，SDiffStore"><span class="toc-number">1.4.3.</span> <span class="toc-text">SInter，SDiff，SInterStore，SDiffStore</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.5.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis-哈希-hash-命令"><span class="toc-number">1.</span> <span class="toc-text">Redis 哈希(hash)命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础命令"><span class="toc-number">1.2.</span> <span class="toc-text">基础命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HSet"><span class="toc-number">1.2.1.</span> <span class="toc-text">HSet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HGet"><span class="toc-number">1.2.2.</span> <span class="toc-text">HGet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HExists"><span class="toc-number">1.2.3.</span> <span class="toc-text">HExists</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HLen"><span class="toc-number">1.2.4.</span> <span class="toc-text">HLen</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HDel"><span class="toc-number">1.2.5.</span> <span class="toc-text">HDel</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#升级命令"><span class="toc-number">1.3.</span> <span class="toc-text">升级命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HMSet"><span class="toc-number">1.3.1.</span> <span class="toc-text">HMSet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HMGet"><span class="toc-number">1.3.2.</span> <span class="toc-text">HMGet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HGetAll"><span class="toc-number">1.3.3.</span> <span class="toc-text">HGetAll</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HKeys"><span class="toc-number">1.3.4.</span> <span class="toc-text">HKeys</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HVals"><span class="toc-number">1.3.5.</span> <span class="toc-text">HVals</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HSetNX"><span class="toc-number">1.3.6.</span> <span class="toc-text">HSetNX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HIncrBy"><span class="toc-number">1.3.7.</span> <span class="toc-text">HIncrBy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HIncrByFloat"><span class="toc-number">1.3.8.</span> <span class="toc-text">HIncrByFloat</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.4.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
                 </div>
             </div>
             
