@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+<html lang="zh-Cn" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Redis 哈希(hash)命令 - 小黑开发</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="JS TS NodeJs 数据库 前端 JavaScript TypeScript Vue React Git,"> 
+    <meta name="description" content="Redis 哈希(hash)命令前言大概浏览了一下Redis中哈希Hash命令，发现当你对前边的字符串String，列表List和集合Set命令掌握的八九不离十的情况下，哈希Hash还是挺简单的。废,"> 
+    <meta name="author" content="silence_zhpf"> 
+    <link rel="alternative" href="atom.xml" title="小黑开发" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">小黑开发</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="http://hackers267.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">Redis 哈希(hash)命令</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/数据库"><b>「
+                    </b>数据库<b> 」</b></a>
+                
+                二月 24, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2020/02/24/Redis-%E5%93%88%E5%B8%8C-hash-%E5%91%BD%E4%BB%A4/" title="Redis 哈希(hash)命令" class="">Redis 哈希(hash)命令</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    4.2k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    4 mins.
+                </span>
+                
+                
+                <span id="/2020/02/24/Redis-哈希-hash-命令/" class="leancloud_visitors" data-flag-title="Redis 哈希(hash)命令">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <i class="leancloud-visitors-count">1000000</i>
+                </span>
+                
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/hash/" rel="tag">hash</a></li><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/%E5%93%88%E5%B8%8C/" rel="tag">哈希</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="Redis-哈希-hash-命令"><a href="#Redis-哈希-hash-命令" class="headerlink" title="Redis 哈希(hash)命令"></a>Redis 哈希(hash)命令</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>大概浏览了一下Redis中哈希<em>Hash</em>命令，发现当你对前边的字符串<em>String</em>，列表<em>List</em>和集合<em>Set</em>命令掌握的八九不离十的情况下，哈希<em>Hash</em>还是挺简单的。废话不多说，我们这就开始。我们从最基础的开始。</p>
+<h2 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h2><h3 id="HSet"><a href="#HSet" class="headerlink" title="HSet"></a>HSet</h3><p><em>HSet</em>是<em>Hash Set</em>的缩写。这个命令将哈希表<em>key</em>中的字段<em>field</em>的值设为<em>value</em>。其命令为：<code>HSet key field value</code>。需要说明的是，这个命令在哈希表存在的时候，会将<em>field</em>字段的值设置为<em>value</em>。当哈希表不存在的时候，首先初始化一个哈希表，然后再执行<em>HSet</em>操作。返回值：</p>
+<ul>
+<li>如果字段是在哈希表中新建的字段并且值设置成功，则返回<strong>1</strong>。</li>
+<li>如果该字段已经存在于哈希表中，并且字段的原值成功被新值覆盖，则返回<strong>0</strong>。</li>
+</ul>
+<h3 id="HGet"><a href="#HGet" class="headerlink" title="HGet"></a>HGet</h3><p><em>HGet</em>是<em>Hash Get</em>的缩写。这个命令用来读取哈希表中指定的字段值。如果哈希表中不存在该字段，则返回<em>nil</em>。</p>
+<p>和<em>HGet</em>相似，存在一个命令，用来判断指定的字段是否存在于哈希表中，这个命令就是<em>HExists</em>。</p>
+<h3 id="HExists"><a href="#HExists" class="headerlink" title="HExists"></a>HExists</h3><p><em>HExists</em>是<em>Hash Exists</em>的缩写，用来判断指定的字段是否存在于哈希表中。其命令为：<code>HExists key field</code>。其返回值表示如下：</p>
+<ul>
+<li><strong>0</strong> -&gt; 哈希表中不存在指定的字段，或者<em>key</em>不存在</li>
+<li><strong>1</strong>-&gt; 哈希表中存在指定的字段。</li>
+</ul>
+<h3 id="HLen"><a href="#HLen" class="headerlink" title="HLen"></a>HLen</h3><p><em>HLen</em>是<em>Hash Len</em>的缩写，用来获取哈希表中字段的数量。其命令为：<code>HLen key</code>。返回值为哈希表中字段的数量。当<em>key</em>不存在的时候，返回<strong>0</strong>。</p>
+<h3 id="HDel"><a href="#HDel" class="headerlink" title="HDel"></a>HDel</h3><p><em>HDel</em>是<em>Hash Del</em>的缩写，用来删除哈希表中一个或者多个指定的字段，如果指定的字段不存在于哈希表中。那么，这个字段将会被忽略。其命令为：<code>HDel key field1 … fieldN</code>。返回值为被成功删除的字段。</p>
+<h2 id="升级命令"><a href="#升级命令" class="headerlink" title="升级命令"></a>升级命令</h2><p>我们已经大致上了解了Redis中对哈希操作的一些基础命令。那么现在就让我们先更多的了解一下稍微<em>高级</em>的命令吧。</p>
+<h3 id="HMSet"><a href="#HMSet" class="headerlink" title="HMSet"></a>HMSet</h3><p><em>HMSet</em>是<em>Hash Multi Set</em>的缩写，这个命令可以将多个<em>field-value</em>对设置到哈希表中。有了这个命令，就可以让我们多次调用<em>HSet</em>来给哈希表赋值了。其命令为：<code>HMSet key field1 value1 ... fieldN valueN</code>。如果命令执行成功，返回OK。</p>
+<h3 id="HMGet"><a href="#HMGet" class="headerlink" title="HMGet"></a>HMGet</h3><p><em>HMGet</em>是<em>Hash Multi Get</em>的缩写，这个命令可以同时获取哈希表中的多个字段的值，其最后的返回值和字段是相对应的，如果某个字段在哈希表中不存在，则该字段对应的返回值为<em>nil</em>。其命令：<code>HMGet key field1 … fieldN</code>。</p>
+<h3 id="HGetAll"><a href="#HGetAll" class="headerlink" title="HGetAll"></a>HGetAll</h3><p><em>HGetAll</em>是<em>Hash Get All</em>的缩写。这个命令用来获取哈希表中的所有字段和所有的值，其返回格式也是一一对应的，一个字段后跟着一个值。命令很简单：<code>HGetAll key</code>。返回值是以列表形式存在的。</p>
+<h3 id="HKeys"><a href="#HKeys" class="headerlink" title="HKeys"></a>HKeys</h3><p><em>HKeys</em>是<em>Hash Keys</em>的缩写。这个命令可以获取哈希表中的所有字段名。其命令为：<code>HKeys key</code>。返回值为一个包含哈希表中所有字段的列表。</p>
+<h3 id="HVals"><a href="#HVals" class="headerlink" title="HVals"></a>HVals</h3><p><em>HVals</em>是<em>Hash Values</em>的缩写。这个命令是和<em>HKeys</em>相对应的命令，用来获取哈希表中的所有字段值。其命令为：<code>HVals key</code>。返回值为一个包好哈希表中所有字段值的列表。</p>
+<h3 id="HSetNX"><a href="#HSetNX" class="headerlink" title="HSetNX"></a>HSetNX</h3><p><em>HSetNX</em>是<em>Hash Set if Not Exists</em>的缩写。其命令是用来创建哈希表中的字段值，当字段已经存在哈希表中的时候，不会执行操作。设置成功，返回<strong>1</strong>，否则返回<strong>0</strong>。</p>
+<h3 id="HIncrBy"><a href="#HIncrBy" class="headerlink" title="HIncrBy"></a>HIncrBy</h3><p><em>HIncrBy</em>是<em>Hash Increment By</em>的缩写，其命令用来为哈希表中某个字段的整数值增加某个量。其命令为：<code>HIncrBy key field number</code>。此增量可为正数，也可为负数。当为负数的时候，相当于从原值减去此值。如果指定的字段不存在，则默认此字段为0.返回值为执行命令后，哈希表中该字段的值。</p>
+<h3 id="HIncrByFloat"><a href="#HIncrByFloat" class="headerlink" title="HIncrByFloat"></a>HIncrByFloat</h3><p><em>HIncrByFloat</em>是<em>Hash Increment By Float</em>的缩写。命令为：<code>HIncrByFloat key field number</code>。和<em>HIncrBy</em>的区别在于<em>number</em>值可是小数。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>了解完了Redis中的哈希表，我们就已经了解了Redis中<em>五种<em>数据结构中的四种(</em>String<em>，</em>List<em>，</em>Set<em>和</em>Hash</em>)。最后剩下的就只有有序集合<em>Sorted Set</em>了。让我们明天再一起了解一下吧。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+            <div id="vcomments"></div>
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>silence_zhpf</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/hackers267" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">7 <p>Articles</p></a></li>
+                    <li><a href="/categories">4 <p>Categories</p></a></li>
+                    <li><a href="/tags">13 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>Contents</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis-哈希-hash-命令"><span class="toc-number">1.</span> <span class="toc-text">Redis 哈希(hash)命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础命令"><span class="toc-number">1.2.</span> <span class="toc-text">基础命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HSet"><span class="toc-number">1.2.1.</span> <span class="toc-text">HSet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HGet"><span class="toc-number">1.2.2.</span> <span class="toc-text">HGet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HExists"><span class="toc-number">1.2.3.</span> <span class="toc-text">HExists</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HLen"><span class="toc-number">1.2.4.</span> <span class="toc-text">HLen</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HDel"><span class="toc-number">1.2.5.</span> <span class="toc-text">HDel</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#升级命令"><span class="toc-number">1.3.</span> <span class="toc-text">升级命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HMSet"><span class="toc-number">1.3.1.</span> <span class="toc-text">HMSet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HMGet"><span class="toc-number">1.3.2.</span> <span class="toc-text">HMGet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HGetAll"><span class="toc-number">1.3.3.</span> <span class="toc-text">HGetAll</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HKeys"><span class="toc-number">1.3.4.</span> <span class="toc-text">HKeys</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HVals"><span class="toc-number">1.3.5.</span> <span class="toc-text">HVals</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HSetNX"><span class="toc-number">1.3.6.</span> <span class="toc-text">HSetNX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HIncrBy"><span class="toc-number">1.3.7.</span> <span class="toc-text">HIncrBy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HIncrByFloat"><span class="toc-number">1.3.8.</span> <span class="toc-text">HIncrByFloat</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.4.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2020
+        <span class="gradient-text">
+            silence_zhpf
+        </span>.
+        Powered by <a href="https://hackers267.github.io/" title="silence_zhpf" target="_blank" rel="noopener">silence_zhpf</a>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+
+
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+    
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+    <script>
+
+        var valine = new Valine();
+
+        function initValine(path) {
+            if (!path) path = window.location.pathname;
+            let language = 'zh-Cn';
+            if (!language) {
+                language = 'en';
+            } else {
+                language = language.toLowerCase();
+            }
+            valine.init({
+                el: '#vcomments',
+                appId: 'pYAJIq3xvX6S9eYsb96qezTK-gzGzoHsz',
+                appKey: 'PkEFvYpiQw9qQRoOmRUgftF3',
+                notify: 'false',
+                verify: 'true',
+                avatar: 'robohash',
+                placeholder: 'Leave your throughs behind~',
+                visitor: 'true',
+                path: path,
+                lang: language
+            });
+        }
+
+        $(document).ready(function () {
+            initValine();
+        });
+    </script>
+
+
+
+</html>

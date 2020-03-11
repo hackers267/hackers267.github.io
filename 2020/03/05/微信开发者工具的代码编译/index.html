@@ -1,0 +1,527 @@
+
+<!DOCTYPE html>
+<html lang="zh-Cn" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>微信开发者工具的代码编译 - 小黑开发</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="JS TS NodeJs 数据库 前端 JavaScript TypeScript Vue React Git,"> 
+    <meta name="description" content="微信开发者工具的代码编译注意事项ES6转ES5当勾选上这个选项的时候，会使用babel将代码转换为ES5代码，而且默认启用JavaScript的严格模式。
+增强编译启用增强编译后，会解决一下问题，首,"> 
+    <meta name="author" content="silence_zhpf"> 
+    <link rel="alternative" href="atom.xml" title="小黑开发" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">小黑开发</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="http://hackers267.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">微信开发者工具的代码编译</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="/categories/小程序"><b>「
+                    </b>小程序<b> 」</b></a>
+                
+                三月 05, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/2020/03/05/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BB%A3%E7%A0%81%E7%BC%96%E8%AF%91/" title="微信开发者工具的代码编译" class="">微信开发者工具的代码编译</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    2.7k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    2 mins.
+                </span>
+                
+                
+                <span id="/2020/03/05/微信开发者工具的代码编译/" class="leancloud_visitors" data-flag-title="微信开发者工具的代码编译">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <i class="leancloud-visitors-count">1000000</i>
+                </span>
+                
+                
+            </p>
+            
+            
+            <ul class="animated fadeInDown post-tags-list" itemprop="keywords"><li class="animated fadeInDown post-tags-list-item"><a class="animated fadeInDown post-tags-list-link" href="/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">微信小程序</a></li></ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h1 id="微信开发者工具的代码编译注意事项"><a href="#微信开发者工具的代码编译注意事项" class="headerlink" title="微信开发者工具的代码编译注意事项"></a>微信开发者工具的代码编译注意事项</h1><h2 id="ES6转ES5"><a href="#ES6转ES5" class="headerlink" title="ES6转ES5"></a>ES6转ES5</h2><p>当勾选上这个选项的时候，会使用<code>babel</code>将代码转换为<code>ES5</code>代码，而且默认启用<code>JavaScript</code>的严格模式。</p>
+<h2 id="增强编译"><a href="#增强编译" class="headerlink" title="增强编译"></a>增强编译</h2><p>启用增强编译后，会解决一下问题，首先让我们看一下，开启增强编译前后的编译能力对比：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>原有逻辑</th>
+<th>增强编译</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Babel版本</td>
+<td>babel6</td>
+<td>babel7</td>
+</tr>
+<tr>
+<td>Presets</td>
+<td>es2015、stage0</td>
+<td>env{chrome:53,ios:8}</td>
+</tr>
+<tr>
+<td>Helpers</td>
+<td>单文件内联</td>
+<td>跨文件共享</td>
+</tr>
+<tr>
+<td>Async/Await</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>严格开关模式</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>忽略文件目录</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>代码压缩</td>
+<td>uglify-js</td>
+<td>terser</td>
+</tr>
+<tr>
+<td>Babel插件</td>
+<td>-</td>
+<td>一系列 proposal *</td>
+</tr>
+<tr>
+<td>polyfill</td>
+<td>大部分 es6</td>
+<td>新增三个 polyfill *</td>
+</tr>
+</tbody></table>
+<ul>
+<li>使用<code>preset-env</code>，支持最新的<code>ECMAScript</code>语法</li>
+<li>共享Babel辅助函数，默认放在项目<code>@babel/runtime</code>目录，可通过<code>项目配置文件</code>配置</li>
+<li>支持 async/await 语法，按需注入 <code>regeneratorRuntime</code>，目录位置与辅助函数一致</li>
+<li>文件首行是<code>//use strict disable;</code>时，即可禁用当前文件严格模式</li>
+<li>可通过<code>项目配置文件</code>指定任意文件、目录不经过编译。</li>
+<li>原有逻辑支持<code>stage0</code>语法，为了向前兼容，易容一系列<code>proposal插件</code></li>
+<li>关于 polyfill,基础库中已经引入大量的<code>es6</code>相关的polyfill<code>可参考文档</code>,增强编译下，新增：Array.prototype.includes(es7)、Object.entries(es8)、Object.values(es8)</li>
+</ul>
+<h2 id="样式补全"><a href="#样式补全" class="headerlink" title="样式补全"></a>样式补全</h2><p>开启此选项，开发工具会自动检测并补全缺失样式，保证在低版本系统上的正常显示。尽管可以规避大部分的问题 ，还是建议开发者需要在 iOS 和 Android 上分别检查小程序的真实表现。</p>
+<h2 id="压缩代码"><a href="#压缩代码" class="headerlink" title="压缩代码"></a>压缩代码</h2><p>开启此选项，开发者工具在上传代码时候将会帮助开发者压缩和混淆 <code>javascript</code> 代码，减小代码包体积。</p>
+<h2 id="代码保护"><a href="#代码保护" class="headerlink" title="代码保护"></a>代码保护</h2><p>开启此选项，开发者工具会尝试对项目代码进行保护，主要是对文件进行扁平化处理并替换 <code>require</code> 引用的文件名，以下情况不适合使用此功能</p>
+<ol>
+<li>对于小程序只有简单页面的情况下，开启此功能效果不佳</li>
+<li>有文件超过 500kb，且其中有使用 <code>require</code> 引用项目中的文件的情况，在运行时可能会报文件没有找到</li>
+<li>动态引用的情况，如 <code>var a = &#39;somefile.js&#39;; require(a);</code></li>
+<li>将 <code>require</code> 函数赋值给其他变量的情况，如 <code>var a = require; a(&#39;somefile.js&#39;);</code></li>
+<li>将 <code>require</code> 作为二元运算符的参数的情况，如 <code>require + 1;</code></li>
+<li>使用 <code>...</code> 运算符且未开启 ES6 转 ES5 的情况</li>
+</ol>
+<h2 id="启用多核心编译"><a href="#启用多核心编译" class="headerlink" title="启用多核心编译"></a>启用多核心编译</h2><p>在四核及以上的电脑上此选项可见。启用此选项，会充分利用 CPU 资源来编译项目的 JS 代码，提高编译的效率。可以选择关闭此选项。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+            <div id="vcomments"></div>
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="/img/avatar.jpg" height=300 width=300></img>
+                    <p>silence_zhpf</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/hackers267" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">7 <p>Articles</p></a></li>
+                    <li><a href="/categories">4 <p>Categories</p></a></li>
+                    <li><a href="/tags">13 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>Contents</h4>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#微信开发者工具的代码编译注意事项"><span class="toc-number">1.</span> <span class="toc-text">微信开发者工具的代码编译注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ES6转ES5"><span class="toc-number">1.1.</span> <span class="toc-text">ES6转ES5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#增强编译"><span class="toc-number">1.2.</span> <span class="toc-text">增强编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#样式补全"><span class="toc-number">1.3.</span> <span class="toc-text">样式补全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#压缩代码"><span class="toc-number">1.4.</span> <span class="toc-text">压缩代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码保护"><span class="toc-number">1.5.</span> <span class="toc-text">代码保护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启用多核心编译"><span class="toc-number">1.6.</span> <span class="toc-text">启用多核心编译</span></a></li></ol></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2020
+        <span class="gradient-text">
+            silence_zhpf
+        </span>.
+        Powered by <a href="https://hackers267.github.io/" title="silence_zhpf" target="_blank" rel="noopener">silence_zhpf</a>
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+
+
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+    
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+    <script>
+
+        var valine = new Valine();
+
+        function initValine(path) {
+            if (!path) path = window.location.pathname;
+            let language = 'zh-Cn';
+            if (!language) {
+                language = 'en';
+            } else {
+                language = language.toLowerCase();
+            }
+            valine.init({
+                el: '#vcomments',
+                appId: 'pYAJIq3xvX6S9eYsb96qezTK-gzGzoHsz',
+                appKey: 'PkEFvYpiQw9qQRoOmRUgftF3',
+                notify: 'false',
+                verify: 'true',
+                avatar: 'robohash',
+                placeholder: 'Leave your throughs behind~',
+                visitor: 'true',
+                path: path,
+                lang: language
+            });
+        }
+
+        $(document).ready(function () {
+            initValine();
+        });
+    </script>
+
+
+
+</html>
